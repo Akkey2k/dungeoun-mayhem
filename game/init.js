@@ -11,6 +11,19 @@ const player = new Player(ctx);
 canvas.width = innerWidth;
 canvas.height = innerHeight - 5;
 
+
+const $healthPanel = document.querySelector("#healthPanel");
+
+const updateInterface = () => {
+    $healthPanel.innerHTML = "";
+
+    for (let i = 0; i < player.getHPMax(); i++) {
+        $healthPanel.insertAdjacentHTML("beforeend", `
+            <div class='${player.getHP() > i ? "heart heart_red" : "heart heart_empty"}'></div>
+        `);
+    }
+}
+
 back.onload = () => {
     startAnimation(10);
     player.init();
@@ -39,5 +52,7 @@ const animation = () => {
     
         player.changePosition();
         player.changeFrame();
+
+        updateInterface()
     }
 }

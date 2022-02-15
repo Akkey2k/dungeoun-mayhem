@@ -114,6 +114,8 @@ class Player {
         }
     }
 
+    /* CORE */
+
     init() {
         this.setAnimationType("idle", "idle");
     }
@@ -248,6 +250,30 @@ class Player {
         }
         if (e.keyCode === 37 /* left */ || e.keyCode === 65 /* a */ ) {
             this.left = false;
+        }
+    }
+
+
+    /* Health Points */
+
+    getHP(){
+        return this.health;
+    }
+
+    getHPMax(){
+        return this.healthMax;
+    }
+
+    dealDamage() {
+        this.health -= 1;
+    }
+
+    heal(hp){
+        if((this.health + hp) < this.healthMax){
+            this.health += hp;
+        }
+        else{
+            this.health = this.healthMax;
         }
     }
 }
