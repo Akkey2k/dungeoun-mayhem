@@ -120,6 +120,11 @@ class Player {
         this.setAnimationType("idle", "idle");
     }
 
+    update() {
+        this.changePosition();
+        this.changeFrame();
+    }
+
     setAnimationType(type, direction, isSustained) {
         direction = direction || this.animationDirection;
 

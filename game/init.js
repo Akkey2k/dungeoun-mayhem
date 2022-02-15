@@ -50,8 +50,7 @@ const animation = () => {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.drawImage(back, 0, 0, window.innerWidth, window.innerHeight);
     
-        player.changePosition();
-        player.changeFrame();
+        player.update();
 
         updateInterface()
     }
