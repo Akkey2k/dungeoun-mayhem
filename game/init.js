@@ -7,6 +7,7 @@ const back = new Image();
 back.src = "../img/Background/background.png";
 
 const player = new Player(ctx);
+// window.player = player; /* FOR DEBUG */
 
 canvas.width = innerWidth;
 canvas.height = innerHeight - 5;

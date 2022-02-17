@@ -72,28 +72,6 @@ class Player {
                     frameCount: 6,
                 },
             },
-            shift: {
-                idle: {
-                    spriteYpos: 5,
-                    frameCount: 3,
-                },
-                up: {
-                    spriteYpos: 5,
-                    frameCount: 3,
-                },
-                right: {
-                    spriteYpos: 5,
-                    frameCount: 3,
-                },
-                down: {
-                    spriteYpos: 5,
-                    frameCount: 3,
-                },
-                left: {
-                    spriteYpos: 5,
-                    frameCount: 3,
-                }
-            },
             attack: {
                 idle: {
                     spriteYpos: 3,
@@ -115,7 +93,51 @@ class Player {
                     spriteYpos: 4,
                     frameCount: 5,
                 }
-            }
+            },
+            hurt: {
+                idle: {
+                    spriteYpos: 5,
+                    frameCount: 3,
+                },
+                up: {
+                    spriteYpos: 5,
+                    frameCount: 3,
+                },
+                right: {
+                    spriteYpos: 5,
+                    frameCount: 3,
+                },
+                down: {
+                    spriteYpos: 5,
+                    frameCount: 3,
+                },
+                left: {
+                    spriteYpos: 6,
+                    frameCount: 3,
+                }
+            },
+            die: {
+                idle: {
+                    spriteYpos: 7,
+                    frameCount: 7,
+                },
+                up: {
+                    spriteYpos: 7,
+                    frameCount: 7,
+                },
+                right: {
+                    spriteYpos: 7,
+                    frameCount: 7,
+                },
+                down: {
+                    spriteYpos: 7,
+                    frameCount: 7,
+                },
+                left: {
+                    spriteYpos: 8,
+                    frameCount: 7,
+                }
+            },
         }
     }
 
@@ -156,7 +178,7 @@ class Player {
         this.ctx.translate(this.arrowOffset, this.arrowOffset);
         this.ctx.rotate(this._getArrowAngle() * Math.PI / 180);
         this.ctx.drawImage(this.arrow, 0, 0, 64, 64, 0, -60, 16, 16);
-        
+
         this.ctx.restore();        
     }
 
@@ -300,9 +322,6 @@ class Player {
         if (e.keyCode === 13 /* enter */) {
             this.setAnimationType("attack", null, true);
         }
-        if (e.keyCode === 16 /* shift */) {
-            this.setAnimationType("shift", null, true);
-        }
     }
 
     release(e) {
@@ -332,7 +351,14 @@ class Player {
     }
 
     dealDamage() {
-        this.health -= 1;
+        this.health = ( this.health - 1 ) <= 0 ? 0 : this.health - 1;
+
+        if(this.health){
+            this.setAnimationType("hurt", null, true);
+        }
+        else{
+            this.setAnimationType("die", null, true);
+        }
     }
 
     heal(hp){
