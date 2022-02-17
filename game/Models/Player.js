@@ -6,6 +6,11 @@ class Player {
         this.imgFolder = "../img/Player/spritesheet.png";
         this.player.src = this.imgFolder;
 
+        this.arrow = new Image();
+        this.arrow.src = "../img/Player/arrow.png"
+        this.angle = 0;
+        this.arrowOffset = 45;
+
         this.health = 5;
         this.healthMax = 5;
 
@@ -139,6 +144,63 @@ class Player {
         let frameYoffset = this.frameHeight * this.animationYpos;
 
         this.ctx.drawImage(this.player, frameXoffset, frameYoffset, this.frameWidth, this.frameHeight, this.xPos, this.yPos, this.frameWidth * 2, this.frameHeight * 2);
+        
+        this._drawArrow()
+    }
+
+    _drawArrow(){
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0); // sets scales and origin
+        this.ctx.save();
+
+        this.ctx.setTransform(1, 0, 0, 1, this.xPos, this.yPos); // sets scales and origin
+        this.ctx.translate(this.arrowOffset, this.arrowOffset);
+        this.ctx.rotate(this._getArrowAngle() * Math.PI / 180);
+        this.ctx.drawImage(this.arrow, 0, 0, 64, 64, 0, -60, 16, 16);
+        
+        this.ctx.restore();        
+    }
+
+    _getArrowAngle(){
+        // this.angle = this.angle >= 359 ? 15 : this.angle + 15;
+        if(!window.mousePosX || !window.mousePosY){
+            return 0;
+        }
+
+        const getVector = function (p1, p2) {
+            return {
+                x: p2.x - p1.x,
+                y: p2.y - p1.y
+            };
+        };
+
+        const dotProduct = function(v1, v2) {
+            return v1.x * v2.x + v1.y * v2.y;
+        };
+        
+        const crossProduct = function(v1, v2) {
+            return v1.x * v2.y - v1.y * v2.x;
+        };
+
+        const getAngle = function (v1, v2) {
+            var dot = dotProduct(v1, v2);
+            var cross = crossProduct(v1, v2);
+          
+            return Math.atan2(cross, dot);
+        };
+
+        const a = {x: this.xPos, y: window.innerHeight - this.yPos};
+        const b = {x: this.xPos, y: 800 };
+
+        const c = {x: this.xPos + this.arrowOffset, y: window.innerHeight - this.yPos};
+        const d = {x: window.mousePosX, y: window.innerHeight - window.mousePosY + this.arrowOffset};
+
+        const v1 = getVector(a, b);
+        const v2 = getVector(c, d);
+        const alpha = getAngle(v1, v2);
+
+        this.angle = -(alpha * 180) / Math.PI;
+
+        return this.angle;
     }
 
     initMoveHandler() {

@@ -12,6 +12,19 @@ canvas.width = innerWidth;
 canvas.height = innerHeight - 5;
 
 
+(function() {
+    document.onmousemove = handleMouseMove;
+    function handleMouseMove(event) {
+        var eventDoc, doc, body;
+
+        event = event || window.event; // IE-ism
+
+        window.mousePosX = event.clientX;
+        window.mousePosY = event.clientY;
+    }
+})();
+
+
 const $healthPanel = document.querySelector("#healthPanel");
 
 const updateInterface = () => {
