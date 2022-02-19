@@ -27,6 +27,7 @@ canvas.height = innerHeight - 5;
 
 const $healthPanel = document.querySelector("#healthPanel");
 const $deathPanel = document.querySelector("#deathPanel");
+const $restartButton = document.querySelector("#restartButton");
 
 const updateInterface = () => {
     $healthPanel.innerHTML = "";
@@ -38,14 +39,28 @@ const updateInterface = () => {
     }
 
     if(!player.getIsAlive()){
-        $deathPanel.classList.add("active")
+        $deathPanel.classList.add("active");
+
+        $restartButton.onclick = () => {
+            window.setTimeout(() => {
+                $deathPanel.classList.remove("active");
+                restartGame();
+            }, 300)
+        }
     }
 }
 
-back.onload = () => {
+back.onload = () => startGame();
+
+const startGame = () => {
     startAnimation(10);
     player.init();
     player.initMoveHandler();
+}
+
+const restartGame = () => {
+    player.reset();
+    startGame();
 };
 
 let FPS, FPSInterval, startTime, now, then, elapsed;

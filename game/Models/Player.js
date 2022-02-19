@@ -145,7 +145,17 @@ class Player {
     /* CORE */
 
     init() {
+        this.reset();
+
         this.setAnimationType("idle", "idle");
+    }
+
+    reset() {
+        this.setIsAlive(true);
+        this.heal(this.healthMax);
+
+        this.xPos = (innerWidth - 100) / 2;
+        this.yPos = (innerHeight - 100) / 2;
     }
 
     update() {
