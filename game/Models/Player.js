@@ -140,9 +140,16 @@ class Player {
                 }
             },
         }
+
+        this.initHandlers();
     }
 
     /* CORE */
+
+    initHandlers(){
+        this.initMoveHandler();
+        this.initAttackHandler();
+    }
 
     init() {
         this.reset();
@@ -238,6 +245,10 @@ class Player {
     initMoveHandler() {
         document.addEventListener('keydown', (e) => this.press(e))
         document.addEventListener('keyup', (e) => this.release(e))
+    }
+
+    initAttackHandler() {
+        return;
     }
 
     changeFrame() {

@@ -55,7 +55,6 @@ back.onload = () => startGame();
 const startGame = () => {
     startAnimation(10);
     player.init();
-    player.initMoveHandler();
 }
 
 const restartGame = () => {
@@ -74,7 +73,7 @@ const startAnimation = (FPS) => {
 
 const animation = () => {
     if(!player.getIsAlive()){
-        updateInterface()
+        updateInterface();
         return;
     }
 
@@ -90,6 +89,6 @@ const animation = () => {
     
         player.update();
 
-        updateInterface()
+        updateInterface();
     }
 }
