@@ -248,7 +248,61 @@ class Player {
     }
 
     initAttackHandler() {
+        this.ctx.canvas.addEventListener("click", () => {
+            this.attack();
+        })
         return;
+    }
+
+    attack() {
+        let attackDirection;
+
+        let endPointX;
+        let endPointY;
+
+        let jumpDirectionType;
+         
+        if(this.xPos < window.mousePosX){
+            attackDirection = "right";
+            endPointX = this.xPos + 150;
+            endPointY = this.yPos + 150;
+
+            jumpDirectionType = false;
+        }
+        else{
+            attackDirection = "left";
+            endPointX = this.xPos - 150;
+            endPointY = this.yPos - 150;
+
+            jumpDirectionType = true;
+        }
+
+        const xStep = (window.mousePosX - this.xPos) / 10;
+        const yStep = (window.mousePosY - this.yPos) / 10;
+
+        let animation = window.setInterval(() => {
+
+            this.xPos += xStep;
+            this.yPos += yStep;
+
+            if(jumpDirectionType){
+                if(this.xPos <= endPointX || this.yPos <= endPointY){
+                    window.clearInterval(animation);
+                }
+            }
+            else{
+                if(this.xPos >= endPointX || this.yPos >= endPointY){
+                    window.clearInterval(animation);
+                }
+            }
+        }, 20);
+
+        // window.setTimeout(() => {
+        //     window.clearInterval(animation);
+        // }, 100)
+
+
+        this.setAnimationType("attack", attackDirection, true);
     }
 
     changeFrame() {
@@ -337,11 +391,6 @@ class Player {
         if (e.keyCode === 37 /* left */ || e.keyCode === 65 /* a */) {
             this.left = true
             this.setAnimationType("run", "left");
-        }
-
-
-        if (e.keyCode === 13 /* enter */) {
-            this.setAnimationType("attack", null, true);
         }
     }
 
