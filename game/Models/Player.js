@@ -248,59 +248,59 @@ class Player {
     }
 
     initAttackHandler() {
-        this.ctx.canvas.addEventListener("click", () => {
-            this.attack();
+        this.ctx.canvas.addEventListener("click", (e) => {
+            this.attack(e.clientX, e.clientY);
         })
         return;
     }
 
-    attack() {
+    attack(mouseX, mouseY) {
+        window.clearInterval(this.attackTO);
+
         let attackDirection;
 
-        let endPointX;
-        let endPointY;
-
-        let jumpDirectionType;
-         
-        if(this.xPos < window.mousePosX){
+        if(this.xPos < mouseX){
             attackDirection = "right";
-            endPointX = this.xPos + 150;
-            endPointY = this.yPos + 150;
-
-            jumpDirectionType = false;
         }
         else{
             attackDirection = "left";
-            endPointX = this.xPos - 150;
-            endPointY = this.yPos - 150;
-
-            jumpDirectionType = true;
         }
 
-        const xStep = (window.mousePosX - this.xPos) / 10;
-        const yStep = (window.mousePosY - this.yPos) / 10;
+        const dx = this.xPos - mouseX;
+        const dy = this.yPos - mouseY;
 
-        let animation = window.setInterval(() => {
+        const Xmax = this.xPos + 150;
+        const Xmin = this.xPos - 150;
 
-            this.xPos += xStep;
-            this.yPos += yStep;
+        const Ymax = this.yPos + 150;
+        const Ymin = this.yPos - 150;
 
-            if(jumpDirectionType){
-                if(this.xPos <= endPointX || this.yPos <= endPointY){
-                    window.clearInterval(animation);
+        this.attackTO = window.setInterval(() => {
+            this.yPos = Number(this.yPos.toFixed(0));
+            this.xPos = Number(this.xPos.toFixed(0));
+
+            if (mouseX != this.xPos){
+                this.xPos -= dx/10;
+                                
+                if( this.xPos >= Xmax || this.xPos <= Xmin) {
+                    window.clearInterval(this.attackTO);
                 }
             }
             else{
-                if(this.xPos >= endPointX || this.yPos >= endPointY){
-                    window.clearInterval(animation);
+                window.clearInterval(this.attackTO);
+            }
+
+            if (mouseY != this.yPos){
+                this.yPos -= dy/10;
+
+                if( this.yPos >= Ymax || this.yPos <= Ymin) {
+                    window.clearInterval(this.attackTO);
                 }
             }
-        }, 20);
-
-        // window.setTimeout(() => {
-        //     window.clearInterval(animation);
-        // }, 100)
-
+            else{
+                window.clearInterval(this.attackTO);
+            }
+        }, 20)
 
         this.setAnimationType("attack", attackDirection, true);
     }
