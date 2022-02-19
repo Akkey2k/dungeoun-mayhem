@@ -13,6 +13,7 @@ class Player {
 
         this.health = 5;
         this.healthMax = 5;
+        this.isAlive = true;
 
         this.xPos = (innerWidth - 100) / 2;
         this.yPos = (innerHeight - 100) / 2;
@@ -357,6 +358,10 @@ class Player {
         }
         else{
             this.setAnimationType("die", null, true);
+
+            window.setTimeout(() => {
+                this.setIsAlive(false);
+            }, 700)
         }
     }
 
@@ -367,6 +372,14 @@ class Player {
         else{
             this.health = this.healthMax;
         }
+    }
+
+    setIsAlive(isAlive){
+        this.isAlive = isAlive;
+    }
+
+    getIsAlive(){
+        return this.isAlive;
     }
 }
 

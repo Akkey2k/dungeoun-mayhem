@@ -7,7 +7,7 @@ const back = new Image();
 back.src = "../img/Background/background.png";
 
 const player = new Player(ctx);
-// window.player = player; /* FOR DEBUG */
+window.player = player; /* FOR DEBUG */
 
 canvas.width = innerWidth;
 canvas.height = innerHeight - 5;
@@ -25,8 +25,8 @@ canvas.height = innerHeight - 5;
     }
 })();
 
-
 const $healthPanel = document.querySelector("#healthPanel");
+const $deathPanel = document.querySelector("#deathPanel");
 
 const updateInterface = () => {
     $healthPanel.innerHTML = "";
@@ -35,6 +35,10 @@ const updateInterface = () => {
         $healthPanel.insertAdjacentHTML("beforeend", `
             <div class='${player.getHP() > i ? "heart heart_red" : "heart heart_empty"}'></div>
         `);
+    }
+
+    if(!player.getIsAlive()){
+        $deathPanel.classList.add("active")
     }
 }
 
@@ -54,6 +58,11 @@ const startAnimation = (FPS) => {
 };
 
 const animation = () => {
+    if(!player.getIsAlive()){
+        updateInterface()
+        return;
+    }
+
     requestAnimationFrame(animation);
     now = Date.now();
     elapsed = now - then;
