@@ -249,14 +249,14 @@ class Player {
 
     initAttackHandler() {
         this.ctx.canvas.addEventListener("click", (e) => {
-            this.attack(e.clientX, e.clientY);
+            if(!this.alreadyAttacking){
+                this.attack(e.clientX, e.clientY);
+            }
         })
         return;
     }
 
     attack(mouseX, mouseY) {
-        window.clearInterval(this.attackTO);
-
         let attackDirection;
 
         if(this.xPos < mouseX){
@@ -275,19 +275,29 @@ class Player {
         const Ymax = this.yPos + 150;
         const Ymin = this.yPos - 150;
 
+        const clearAttackDelay = () => {
+            window.setTimeout(() => {
+                this.alreadyAttacking = false;
+            }, 90)
+        }
+
         this.attackTO = window.setInterval(() => {
             this.yPos = Number(this.yPos.toFixed(0));
             this.xPos = Number(this.xPos.toFixed(0));
+            
+            this.alreadyAttacking = true;
 
             if (mouseX != this.xPos){
                 this.xPos -= dx/10;
                                 
                 if( this.xPos >= Xmax || this.xPos <= Xmin) {
                     window.clearInterval(this.attackTO);
+                    clearAttackDelay();
                 }
             }
             else{
                 window.clearInterval(this.attackTO);
+                clearAttackDelay();
             }
 
             if (mouseY != this.yPos){
@@ -295,10 +305,12 @@ class Player {
 
                 if( this.yPos >= Ymax || this.yPos <= Ymin) {
                     window.clearInterval(this.attackTO);
+                    clearAttackDelay();
                 }
             }
             else{
                 window.clearInterval(this.attackTO);
+                clearAttackDelay();
             }
         }, 20)
 
