@@ -183,7 +183,6 @@ class Player {
     }
 
     _getArrowAngle(){
-        // this.angle = this.angle >= 359 ? 15 : this.angle + 15;
         if(!window.mousePosX || !window.mousePosY){
             return 0;
         }
@@ -211,7 +210,7 @@ class Player {
         };
 
         const a = {x: this.xPos, y: window.innerHeight - this.yPos};
-        const b = {x: this.xPos, y: 800 };
+        const b = {x: this.xPos, y: window.innerHeight };
 
         const c = {x: this.xPos + this.arrowOffset, y: window.innerHeight - this.yPos};
         const d = {x: window.mousePosX, y: window.innerHeight - window.mousePosY + this.arrowOffset};
