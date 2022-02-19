@@ -334,29 +334,35 @@ class Player {
     changePosition() {
         if(!this.sustainedAnimationEnabled){
             if (this.up) {
-                this.yPos = this.yPos - this.step;
+                if(this.yPos >= 15){
+                    this.yPos = this.yPos - this.step;
+                }
 
                 if(this.animationDirection != "up" || this.animationType != "run"){
                     this.setAnimationType("run", "up");
                 }
             }
             if (this.right) {
-                this.xPos = this.xPos + this.step
-
+                if(this.xPos <= this.ctx.canvas.width - this.frameWidth * 2){
+                    this.xPos = this.xPos + this.step
+                }
                 if(this.animationDirection != "right" || this.animationType != "run"){
                     this.setAnimationType("run", "right");
                 }
             }
             if (this.down) {
-                this.yPos = this.yPos + this.step
+                if(this.yPos <= this.ctx.canvas.height - this.frameHeight * 2){
+                    this.yPos = this.yPos + this.step;
+                }
 
                 if(this.animationDirection != "down" || this.animationType != "run"){
                     this.setAnimationType("run", "down");
                 }
             }
             if (this.left) {
-                this.xPos = this.xPos - this.step
-
+                if(this.xPos >= 0){
+                    this.xPos = this.xPos - this.step
+                }
                 if(this.animationDirection != "left" || this.animationType != "run"){
                     this.setAnimationType("run", "left");
                 }
