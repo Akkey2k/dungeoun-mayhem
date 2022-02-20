@@ -62,6 +62,23 @@ const restartGame = () => {
     startGame();
 };
 
+let enemies = [
+    {
+        posX: 500,
+        posY: 500,
+        width: 60,
+        height: 60,
+        health: 2
+    },
+    {
+        posX: 800,
+        posY: 300,
+        width: 60,
+        height: 60,
+        health: 2
+    }
+];
+
 let FPS, FPSInterval, startTime, now, then, elapsed;
 
 const startAnimation = (FPS) => {
@@ -86,6 +103,26 @@ const animation = () => {
 
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.drawImage(back, 0, 0, window.innerWidth, window.innerHeight);
+
+        for (let i = 0; i < enemies.length; i++) {
+            const enemy = enemies[i];
+
+            ctx.fillRect(enemy.posX, enemy.posY, enemy.width, enemy.height);
+
+            console.log(player.xPos, enemy.posX);
+            if( player.xPos + player.frameWidth/2 > enemy.posX &&
+                player.xPos + player.frameWidth/2 < enemy.posX + enemy.width / 2 &&
+
+                player.yPos + player.frameHeight/2 > enemy.posY &&
+                player.yPos + player.frameHeight/2 < enemy.posY + enemy.height / 2
+            ){
+                enemy.health -= 1;
+            }
+
+            if(enemy.health == 0){
+                enemies.splice(i, 1);
+            }
+        }
     
         player.update();
 
