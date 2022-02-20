@@ -53,7 +53,7 @@ const updateInterface = () => {
 back.onload = () => startGame();
 
 const startGame = () => {
-    startAnimation(10);
+    startAnimation(12);
     player.init();
 }
 

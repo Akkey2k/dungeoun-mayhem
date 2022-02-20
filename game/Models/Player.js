@@ -30,7 +30,7 @@ class Player {
         this.animationDirection = "idle";
         this.sustainedAnimationEnabled = false;
 
-        this.step = 15;
+        this.step = 20;
 
         this.sprites = {
             idle: {
