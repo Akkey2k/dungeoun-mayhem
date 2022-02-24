@@ -448,7 +448,7 @@ class Player {
 
             window.setTimeout(() => {
                 this.setIsAlive(false);
-            }, 700)
+            }, 500)
         }
     }
 
