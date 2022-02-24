@@ -427,6 +427,12 @@ class Player {
         }
     }
 
+    getCenter() {
+        return {
+            x: this.xPos + this.frameWidth/2,
+            y: this.yPos + this.frameHeight/2
+        }
+    }
 
     /* Health Points */
     getHP(){

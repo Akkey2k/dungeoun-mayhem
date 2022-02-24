@@ -1,4 +1,6 @@
-import { Player } from "./Models/Player.js";
+import {
+    Player
+} from "./Models/Player.js";
 
 const canvas = document.querySelector("#scene");
 const ctx = canvas.getContext("2d");
@@ -15,8 +17,9 @@ canvas.height = document.body.clientHeight;
 /**
  * Mouse position
  */
-(function() {
+(function () {
     document.onmousemove = handleMouseMove;
+
     function handleMouseMove(event) {
         var eventDoc, doc, body;
 
@@ -39,17 +42,17 @@ const $restartButton = document.querySelector("#restartButton");
 /**
  * Parallax effect 
  */
-(function() {
+(function () {
     document.addEventListener("mousemove", parallax);
     const elems = document.querySelectorAll(".parallax");
 
     function parallax(e) {
-        let _w = window.innerWidth/2;
-        let _h = window.innerHeight/2;
+        let _w = window.innerWidth / 2;
+        let _h = window.innerHeight / 2;
 
         let _mouseX = e.clientX;
         let _mouseY = e.clientY;
-        
+
         let _depth1 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
         let _depth2 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
         let _depth3 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
@@ -87,7 +90,7 @@ const updateInterface = () => {
         `);
     }
 
-    if(!player.getIsAlive()){
+    if (!player.getIsAlive()) {
         $deathPanel.classList.add("active");
 
         $restartButton.onclick = () => {
@@ -99,34 +102,81 @@ const updateInterface = () => {
     }
 }
 
-let enemies = [
-    {
-        posX: 500,
-        posY: 500,
-        width: 60,
-        height: 60,
-        health: 2
-    },
-    {
-        posX: 800,
-        posY: 300,
-        width: 60,
-        height: 60,
-        health: 2
+let enemies = {};
+let enemiesCount = 0;
+let retry = true;
+
+const drawEnemies = () => {
+    if (!Object.keys(enemies).length) {
+        spawnEnemies(2);
     }
-];
+
+    for (const id in enemies) {
+        const enemy = enemies[id];
+
+        ctx.fillRect(enemy.posX, enemy.posY, enemy.width, enemy.height);
+    }
+}
+
+const spawnEnemies = (count) => {
+    for(var i = 0; i < count; i++){
+        while (retry) {
+            const id = Date.now();
+    
+            enemies[id] = {
+                posX: Math.random() * (canvas.width - 200) + 100,
+                posY: Math.random() * (canvas.height - 200) + 100,
+                width: 60,
+                height: 60,
+                health: 1,
+            }
+
+            retry = ctx.getImageData(enemies[id].posX, enemies[id].posY, 1, 1).data[0] !== 0;
+    
+            if ((enemiesCount + 1) < count) {
+                enemiesCount += 1;
+            }
+                else {
+                enemiesCount = 0;
+                break;
+            }
+        }
+    }
+
+    console.log(enemies);
+}
+
+const checkEnemiesCollision = () => {
+    for (const id in enemies) {
+        const enemy = enemies[id];
+
+        if (
+            player.getCenter().x > enemy.posX &&
+            player.getCenter().x < enemy.posX + enemy.width &&
+
+            player.getCenter().y > enemy.posY &&
+            player.getCenter().y < enemy.posY + enemy.height
+        ) {
+            enemy.health -= 1;
+        }
+
+        if (enemy.health == 0) {
+            delete enemies[id];
+        }
+    }
+}
 
 let FPS, FPSInterval, startTime, now, then, elapsed;
 
 const startAnimation = (FPS) => {
-    FPSInterval = 1000/FPS;
+    FPSInterval = 1000 / FPS;
     then = Date.now();
     startTime = then;
     animation();
 };
 
 const animation = () => {
-    if(!player.getIsAlive()){
+    if (!player.getIsAlive()) {
         updateInterface();
         return;
     }
@@ -135,32 +185,15 @@ const animation = () => {
     now = Date.now();
     elapsed = now - then;
 
-    if(elapsed > FPSInterval){
+    if (elapsed > FPSInterval) {
         then = now - (elapsed % FPSInterval);
 
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.drawImage(back, 0, 0, window.innerWidth, window.innerHeight);
 
-        for (let i = 0; i < enemies.length; i++) {
-            const enemy = enemies[i];
+        drawEnemies();
+        checkEnemiesCollision()
 
-            ctx.fillRect(enemy.posX, enemy.posY, enemy.width, enemy.height);
-
-            console.log(player.xPos, enemy.posX);
-            if( player.xPos + player.frameWidth/2 > enemy.posX &&
-                player.xPos + player.frameWidth/2 < enemy.posX + enemy.width / 2 &&
-
-                player.yPos + player.frameHeight/2 > enemy.posY &&
-                player.yPos + player.frameHeight/2 < enemy.posY + enemy.height / 2
-            ){
-                enemy.health -= 1;
-            }
-
-            if(enemy.health == 0){
-                enemies.splice(i, 1);
-            }
-        }
-    
         player.update();
 
         updateInterface();
