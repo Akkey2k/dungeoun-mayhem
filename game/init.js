@@ -37,11 +37,11 @@ const $deathPanel = document.querySelector("#deathPanel");
 const $restartButton = document.querySelector("#restartButton");
 
 /**
- * Parallax menu effect 
+ * Parallax effect 
  */
 (function() {
     document.addEventListener("mousemove", parallax);
-    const elem = document.querySelector(".parallax");
+    const elems = document.querySelectorAll(".parallax");
 
     function parallax(e) {
         let _w = window.innerWidth/2;
@@ -55,7 +55,9 @@ const $restartButton = document.querySelector("#restartButton");
         let _depth3 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
         let x = `${_depth3}, ${_depth2}, ${_depth1}`;
 
-        elem.style.backgroundPosition = x;
+        for (const el of elems) {
+            el.style.backgroundPosition = x;
+        }
     }
 
 })();
