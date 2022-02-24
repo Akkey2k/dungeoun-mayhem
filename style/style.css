@@ -81,6 +81,7 @@ body {
 
     opacity: 0;
     pointer-events: none;
+    transition: opacity .5s linear;
 }
 
 .deathPanel.active {
@@ -191,6 +192,7 @@ body {
     background-position: bottom center;
 
     opacity: 1;
+    transition: opacity .5s linear;
 }
 
 .menuPanel.hidden {

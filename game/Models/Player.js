@@ -429,7 +429,6 @@ class Player {
 
 
     /* Health Points */
-
     getHP(){
         return this.health;
     }
