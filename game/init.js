@@ -12,7 +12,9 @@ window.player = player; /* FOR DEBUG */
 canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
 
-
+/**
+ * Mouse position
+ */
 (function() {
     document.onmousemove = handleMouseMove;
     function handleMouseMove(event) {
@@ -25,9 +27,54 @@ canvas.height = document.body.clientHeight;
     }
 })();
 
+const $interface = document.querySelector("#interface");
+
+const $menuPanel = document.querySelector("#menuPanel");
+const $startButton = document.querySelector("#startButton");
+
 const $healthPanel = document.querySelector("#healthPanel");
 const $deathPanel = document.querySelector("#deathPanel");
 const $restartButton = document.querySelector("#restartButton");
+
+/**
+ * Parallax menu effect 
+ */
+(function() {
+    document.addEventListener("mousemove", parallax);
+    const elem = document.querySelector(".parallax");
+
+    function parallax(e) {
+        let _w = window.innerWidth/2;
+        let _h = window.innerHeight/2;
+
+        let _mouseX = e.clientX;
+        let _mouseY = e.clientY;
+        
+        let _depth1 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
+        let _depth2 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
+        let _depth3 = `${50 - (_mouseX - _w) * 0.03}% ${50 - (_mouseY - _h) * 0.01}%`;
+        let x = `${_depth3}, ${_depth2}, ${_depth1}`;
+
+        elem.style.backgroundPosition = x;
+    }
+
+})();
+
+$startButton.onclick = () => {
+    startGame();
+    $menuPanel.classList.add("hidden")
+    $interface.classList.add("hidden")
+};
+
+const startGame = () => {
+    startAnimation(12);
+    player.init();
+}
+
+const restartGame = () => {
+    player.reset();
+    startGame();
+};
 
 const updateInterface = () => {
     $healthPanel.innerHTML = "";
@@ -49,18 +96,6 @@ const updateInterface = () => {
         }
     }
 }
-
-back.onload = () => startGame();
-
-const startGame = () => {
-    startAnimation(12);
-    player.init();
-}
-
-const restartGame = () => {
-    player.reset();
-    startGame();
-};
 
 let enemies = [
     {

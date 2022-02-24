@@ -24,7 +24,9 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
+}
 
+#interface.hidden {
     user-select: none;
     pointer-events: none;
 }
@@ -170,4 +172,52 @@ body {
 
 .deathPanel--button:active {
     border: 5px #747474 solid;
+}
+
+
+
+.menuPanel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-image: url("/img/Background/menuBack.png");
+
+    background-repeat: no-repeat;
+    background-size: 101% auto;
+    background-position: bottom center;
+
+    opacity: 1;
+}
+
+.menuPanel.hidden {
+    opacity: 0;
+}
+
+.menuPanel .content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuPanel--button {
+    padding: 15px;
+    font-size: 40px;
+    background-color: #d3d3d3;
+
+    margin-bottom: -150px;
+    border: 10px #d3d3d3 solid;
+}
+
+.menuPanel--button:active {
+    border: 10px #747474 solid;
 }
