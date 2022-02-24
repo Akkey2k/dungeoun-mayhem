@@ -9,8 +9,8 @@ back.src = "../img/Background/background.png";
 const player = new Player(ctx);
 window.player = player; /* FOR DEBUG */
 
-canvas.width = innerWidth;
-canvas.height = innerHeight - 5;
+canvas.width = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
 
 
 (function() {

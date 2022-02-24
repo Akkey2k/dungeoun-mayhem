@@ -12,6 +12,12 @@
     cursor: url("/img/Cursor/default.png"), auto;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
 #interface {
     position: fixed;
     top: 0;
