@@ -102,10 +102,6 @@ const updateInterface = () => {
     }
 }
 
-let enemies = {};
-let enemiesCount = 0;
-let retry = true;
-
 const drawEnemies = () => {
     if (!Object.keys(enemies).length) {
         spawnEnemies(2);
@@ -117,6 +113,10 @@ const drawEnemies = () => {
         ctx.fillRect(enemy.posX, enemy.posY, enemy.width, enemy.height);
     }
 }
+
+let enemies = {};
+let enemiesCount = 0;
+let retry = true;
 
 const spawnEnemies = (count) => {
     for(var i = 0; i < count; i++){
@@ -142,8 +142,6 @@ const spawnEnemies = (count) => {
             }
         }
     }
-
-    console.log(enemies);
 }
 
 const checkEnemiesCollision = () => {
@@ -185,6 +183,8 @@ const animation = () => {
     now = Date.now();
     elapsed = now - then;
 
+    checkEnemiesCollision()
+
     if (elapsed > FPSInterval) {
         then = now - (elapsed % FPSInterval);
 
@@ -192,8 +192,6 @@ const animation = () => {
         ctx.drawImage(back, 0, 0, window.innerWidth, window.innerHeight);
 
         drawEnemies();
-        checkEnemiesCollision()
-
         player.update();
 
         updateInterface();

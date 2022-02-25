@@ -185,6 +185,10 @@ class Player {
 
         this.ctx.drawImage(this.player, frameXoffset, frameYoffset, this.frameWidth, this.frameHeight, this.xPos, this.yPos, this.frameWidth * 2, this.frameHeight * 2);
         
+        /* DEBUG player area */
+        // this.ctx.strokeRect(this.xPos, this.yPos, this.frameWidth * 2, this.frameHeight * 2);
+        // this.ctx.strokeRect(this.getCenter().x, this.getCenter().y, 3, 3);
+
         this._drawArrow()
     }
 
@@ -429,8 +433,8 @@ class Player {
 
     getCenter() {
         return {
-            x: this.xPos + this.frameWidth/2,
-            y: this.yPos + this.frameHeight/2
+            x: this.xPos + this.frameWidth,
+            y: this.yPos + this.frameHeight
         }
     }
 
