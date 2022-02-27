@@ -72,6 +72,7 @@ $startButton.onclick = () => {
 };
 
 const startGame = () => {
+    enemies = {};
     startAnimation(12);
     player.init();
 }
@@ -161,7 +162,12 @@ const checkEnemiesCollision = () => {
             player.getCenter().y > enemy.posY &&
             player.getCenter().y < enemy.posY + enemy.height
         ) {
-            enemy.health -= 1;
+            if(player.isAttacking()){
+                enemy.health -= 1;
+            }
+            else{
+                player.dealDamage();
+            }
         }
 
         if (enemy.health == 0) {

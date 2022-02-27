@@ -260,6 +260,10 @@ class Player {
         return;
     }
 
+    isAttacking() {
+        return this.alreadyAttacking;
+    }
+
     attack(mouseX, mouseY) {
         let attackDirection;
 
@@ -448,6 +452,16 @@ class Player {
     }
 
     dealDamage() {
+        if(this.gotDamageTO){
+            console.log(this.gotDamageTO);
+            return;
+        }else{            
+            this.gotDamageTO = window.setTimeout(() => {
+                window.clearTimeout(this.gotDamageTO);
+                delete this.gotDamageTO;
+            }, 1000)
+        }
+
         this.health = ( this.health - 1 ) <= 0 ? 0 : this.health - 1;
 
         if(this.health){
