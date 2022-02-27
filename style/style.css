@@ -31,18 +31,27 @@ body {
     pointer-events: none;
 }
 
-.levelPanel {
+.avatarPanel {
     position: absolute;
     top: 20px;
+    left: 30px;
+
+    width: 80px;
+}
+
+.avatarPanel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.levelPanel {
+    position: absolute;
     left: 20px;
+    top: 100px;
 
     display: flex;
-
-    background-color: #2b2b2b90;
-    border-radius: 10px;
-
     width: 100px;
-    height: 55px;
 }
 
 .levelPanel span {
@@ -55,6 +64,17 @@ body {
     white-space: nowrap;
     font-size: 15px;
     vertical-align: middle;
+}
+
+.expPanel {
+    position: absolute;
+    left: 140px;
+    top: 80px;
+
+    width: 270px;
+    height: 10px;
+    border: 2px #2b2b2b solid;
+    box-sizing: border-box;
 }
 
 .healthPanel {

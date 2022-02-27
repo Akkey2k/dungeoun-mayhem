@@ -506,18 +506,22 @@ class Player {
         this._checkLvlUp();
     }
 
+    getExp(){
+        return this.expNow;
+    }
+
     getLvl() {
         return this.lvl;
     }
 
     _checkLvlUp() {
-        if(this.expNow >= this._getExpNeedToLvlUp()){
+        if(this.expNow >= this.getExpNeedToLvlUp()){
             this.lvl += 1;
             this.expNow = 0;
         }
     }
 
-    _getExpNeedToLvlUp(){
+    getExpNeedToLvlUp(){
         if(this.lvl >= 1 && this.lvl <= 10){
             this.expNeedToLvlUp = 1000;
         }

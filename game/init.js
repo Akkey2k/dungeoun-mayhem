@@ -37,6 +37,8 @@ const $startButton = document.querySelector("#startButton");
 
 const $levelPanel = document.querySelector("#levelPanel");
 const $healthPanel = document.querySelector("#healthPanel");
+const $expPanel = document.querySelector("#expPanel");
+
 const $deathPanel = document.querySelector("#deathPanel");
 const $restartButton = document.querySelector("#restartButton");
 
@@ -92,7 +94,10 @@ const updateInterface = () => {
         `);
     }
 
-    $levelPanel.innerHTML = `<span>${player.getLvl()} lvl</span>`
+    $levelPanel.innerHTML = `<span>${player.getLvl()} lvl</span>`;
+
+    const expProcent = (player.getExp() * 100) / player.getExpNeedToLvlUp();
+    $expPanel.style.background = `linear-gradient(to right, green ${expProcent}%, transparent ${expProcent}%, transparent ${100 - expProcent}%)`;
 
     if (!player.getIsAlive()) {
         $deathPanel.classList.add("active");
