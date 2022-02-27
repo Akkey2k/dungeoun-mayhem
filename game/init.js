@@ -35,6 +35,7 @@ const $interface = document.querySelector("#interface");
 const $menuPanel = document.querySelector("#menuPanel");
 const $startButton = document.querySelector("#startButton");
 
+const $playerStat = document.querySelector("#playerStat");
 const $levelPanel = document.querySelector("#levelPanel");
 const $healthPanel = document.querySelector("#healthPanel");
 const $expPanel = document.querySelector("#expPanel");
@@ -86,6 +87,8 @@ const restartGame = () => {
 };
 
 const updateInterface = () => {
+    $playerStat.classList.add("active");
+
     $healthPanel.innerHTML = "";
 
     for (let i = 0; i < player.getHPMax(); i++) {
@@ -228,7 +231,7 @@ const animation = () => {
     now = Date.now();
     elapsed = now - then;
 
-    // moveEnemiesToPlayer()
+    moveEnemiesToPlayer()
     checkEnemiesCollision()
 
     if (elapsed > FPSInterval) {
