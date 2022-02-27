@@ -457,7 +457,6 @@ class Player {
 
     dealDamage() {
         if(this.gotDamageTO){
-            console.log(this.gotDamageTO);
             return;
         }else{            
             this.gotDamageTO = window.setTimeout(() => {

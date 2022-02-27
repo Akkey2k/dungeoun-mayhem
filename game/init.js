@@ -116,7 +116,7 @@ const updateInterface = () => {
 
 const drawEnemies = () => {
     if (!Object.keys(enemies).length) {
-        spawnEnemies(2);
+        spawnEnemies(5);
     }
 
     for (const id in enemies) {
@@ -150,11 +150,12 @@ const spawnEnemies = (count) => {
             }
 
             retry = ctx.getImageData(enemies[id].posX, enemies[id].posY, 1, 1).data[0] !== 0;
+            console.log(retry);
     
             if ((enemiesCount + 1) < count) {
                 enemiesCount += 1;
             }
-                else {
+            else {
                 enemiesCount = 0;
                 break;
             }
