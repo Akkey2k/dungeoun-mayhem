@@ -129,6 +129,12 @@ const spawnEnemies = (count) => {
                 width: 60,
                 height: 60,
                 health: 1,
+                getCenter: function() {
+                    return {
+                        x: this.posX + this.width/2,
+                        y: this.posY + this.height/2
+                    }
+                }
             }
 
             retry = ctx.getImageData(enemies[id].posX, enemies[id].posY, 1, 1).data[0] !== 0;
@@ -164,6 +170,30 @@ const checkEnemiesCollision = () => {
     }
 }
 
+const moveEnemiesToPlayer = () => {
+    for (const id in enemies) {
+        const enemy = enemies[id];
+
+        if(enemy.getCenter().x != player.getCenter().x) {
+            if(enemy.getCenter().x < player.getCenter().x) {
+                enemy.posX += 1.5;
+            }
+            else{
+                enemy.posX -= 1.5;
+            }
+        }
+
+        if(enemy.getCenter().y != player.getCenter().y) {
+            if(enemy.getCenter().y < player.getCenter().y) {
+                enemy.posY += 1.5;
+            }
+            else{
+                enemy.posY -= 1.5;
+            }
+        }
+    }
+}
+
 let FPS, FPSInterval, startTime, now, then, elapsed;
 
 const startAnimation = (FPS) => {
@@ -183,6 +213,7 @@ const animation = () => {
     now = Date.now();
     elapsed = now - then;
 
+    moveEnemiesToPlayer()
     checkEnemiesCollision()
 
     if (elapsed > FPSInterval) {
