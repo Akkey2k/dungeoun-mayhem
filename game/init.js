@@ -35,6 +35,7 @@ const $interface = document.querySelector("#interface");
 const $menuPanel = document.querySelector("#menuPanel");
 const $startButton = document.querySelector("#startButton");
 
+const $levelPanel = document.querySelector("#levelPanel");
 const $healthPanel = document.querySelector("#healthPanel");
 const $deathPanel = document.querySelector("#deathPanel");
 const $restartButton = document.querySelector("#restartButton");
@@ -90,6 +91,8 @@ const updateInterface = () => {
             <div class='${player.getHP() > i ? "heart heart_red" : "heart heart_empty"}'></div>
         `);
     }
+
+    $levelPanel.innerHTML = `<span>${player.getLvl()} lvl</span>`
 
     if (!player.getIsAlive()) {
         $deathPanel.classList.add("active");
@@ -172,6 +175,7 @@ const checkEnemiesCollision = () => {
 
         if (enemy.health == 0) {
             delete enemies[id];
+            player.giveExp();
         }
     }
 }
@@ -219,7 +223,7 @@ const animation = () => {
     now = Date.now();
     elapsed = now - then;
 
-    moveEnemiesToPlayer()
+    // moveEnemiesToPlayer()
     checkEnemiesCollision()
 
     if (elapsed > FPSInterval) {

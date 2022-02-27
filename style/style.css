@@ -31,10 +31,36 @@ body {
     pointer-events: none;
 }
 
-.healthPanel {
+.levelPanel {
     position: absolute;
     top: 20px;
     left: 20px;
+
+    display: flex;
+
+    background-color: #2b2b2b90;
+    border-radius: 10px;
+
+    width: 100px;
+    height: 55px;
+}
+
+.levelPanel span {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    white-space: nowrap;
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.healthPanel {
+    position: absolute;
+    top: 20px;
+    left: 140px;
 
     display: flex;
 

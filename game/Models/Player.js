@@ -32,6 +32,10 @@ class Player {
 
         this.step = 20;
 
+        this.expNow = 0;
+        this.expNeedToLvlUp = 1000;
+        this.lvl = 1;
+
         this.sprites = {
             idle: {
                 idle: {
@@ -491,6 +495,49 @@ class Player {
 
     getIsAlive(){
         return this.isAlive;
+    }
+
+
+    /* Player level & experience */
+
+    giveExp(){
+        this.expNow += 20;
+
+        this._checkLvlUp();
+    }
+
+    getLvl() {
+        return this.lvl;
+    }
+
+    _checkLvlUp() {
+        if(this.expNow >= this._getExpNeedToLvlUp()){
+            this.lvl += 1;
+            this.expNow = 0;
+        }
+    }
+
+    _getExpNeedToLvlUp(){
+        if(this.lvl >= 1 && this.lvl <= 10){
+            this.expNeedToLvlUp = 1000;
+        }
+        else if (this.lvl > 10 && this.lvl <= 20){
+            this.expNeedToLvlUp = 2000;
+        }
+        else if (this.lvl > 20 && this.lvl <= 30){
+            this.expNeedToLvlUp = 3000;
+        }
+        else if (this.lvl > 30 && this.lvl <= 40){
+            this.expNeedToLvlUp = 4000;
+        }
+        else if (this.lvl > 40 && this.lvl <= 50){
+            this.expNeedToLvlUp = 5000;
+        }
+        else{
+            this.expNeedToLvlUp = Infinity;
+        }
+
+        return this.expNeedToLvlUp;
     }
 }
 
