@@ -116,7 +116,7 @@ const updateInterface = () => {
 
 const drawEnemies = () => {
     if (!Object.keys(enemies).length) {
-        spawnEnemies(5);
+        spawnEnemies(10);
     }
 
     for (const id in enemies) {
